@@ -417,9 +417,6 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
 
     this.imports.add(this.getApolloReactCommonImport(true));
     this.imports.add(this.getApolloReactHooksImport(false));
-    this.imports.add(
-      "import { useQuery, useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';"
-    );
     this.imports.add("import { getClient } from '@/lib/apolloClient';");
     this.imports.add(this.getDefaultOptions());
 
@@ -437,17 +434,17 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     };
 
     const hookFns = [
-      `export function use${operationName}(baseOptions${
-        hasRequiredVariables && operationType !== "Mutation" ? "" : "?"
-      }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ${typeToHook(
-          operationType
-        )}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-        node,
-        documentVariableName
-      )}, options);
-      }`,
+      // `export function use${operationName}(baseOptions${
+      //   hasRequiredVariables && operationType !== "Mutation" ? "" : "?"
+      // }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+      //   const options = {...defaultOptions, ...baseOptions}
+      //   return ${typeToHook(
+      //     operationType
+      //   )}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+      //   node,
+      //   documentVariableName
+      // )}, options);
+      // }`,
     ];
 
     // const hookFns = [
@@ -469,46 +466,46 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     }
 
     const hookResults = [
-      `export type ${operationName}HookResult = ReturnType<typeof use${operationName}>;`,
+      // `export type ${operationName}HookResult = ReturnType<typeof use${operationName}>;`,
     ];
 
     if (operationType === "Query") {
-      const lazyOperationName: string =
-        this.convertName(nodeName, {
-          suffix: pascalCase("LazyQuery"),
-          useTypesPrefix: false,
-        }) + this.config.hooksSuffix;
-      hookFns.push(
-        `export function use${lazyOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.LazyQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ${this.getApolloReactHooksIdentifier()}.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-          node,
-          documentVariableName
-        )}, options);
-        }`
-      );
-      hookResults.push(
-        `export type ${lazyOperationName}HookResult = ReturnType<typeof use${lazyOperationName}>;`
-      );
+      // const lazyOperationName: string =
+      //   this.convertName(nodeName, {
+      //     suffix: pascalCase("LazyQuery"),
+      //     useTypesPrefix: false,
+      //   }) + this.config.hooksSuffix;
+      // hookFns.push(
+      //   `export function use${lazyOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.LazyQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+      //     const options = {...defaultOptions, ...baseOptions}
+      //     return ${this.getApolloReactHooksIdentifier()}.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+      //     node,
+      //     documentVariableName
+      //   )}, options);
+      //   }`
+      // );
+      // hookResults.push(
+      //   `export type ${lazyOperationName}HookResult = ReturnType<typeof use${lazyOperationName}>;`
+      // );
 
-      const suspenseOperationName: string =
-        this.convertName(nodeName, {
-          suffix: pascalCase("SuspenseQuery"),
-          useTypesPrefix: false,
-        }) + this.config.hooksSuffix;
+      // const suspenseOperationName: string =
+      //   this.convertName(nodeName, {
+      //     suffix: pascalCase("SuspenseQuery"),
+      //     useTypesPrefix: false,
+      //   }) + this.config.hooksSuffix;
 
-      hookFns.push(
-        `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-          node,
-          documentVariableName
-        )}, options);
-        }`
-      );
-      hookResults.push(
-        `export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`
-      );
+      // hookFns.push(
+      //   `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+      //     const options = {...defaultOptions, ...baseOptions}
+      //     return useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+      //     node,
+      //     documentVariableName
+      //   )}, options);
+      //   }`
+      // );
+      // hookResults.push(
+      //   `export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`
+      // );
 
       const serverOperationNameFull: string =
         this.convertName(nodeName, {
