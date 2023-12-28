@@ -213,9 +213,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
   public getImports(): string[] {
     const baseImports = super.getImports();
 
-    console.log("BASE IMPORTS: ", baseImports);
+    // console.log("BASE IMPORTS: ", baseImports);
 
-    console.log("THIS IMPORTS: ", this.imports);
+    // console.log("THIS IMPORTS: ", this.imports);
 
     const hasOperations = this._collectedOperations.length > 0;
 
@@ -421,7 +421,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     this.imports.add(this.getDefaultOptions());
 
     const typeToHook = (type: string): string => {
-      console.log("TYPE TO HOOK: ", type);
+      // console.log("TYPE TO HOOK: ", type);
 
       switch (type) {
         case "SuspenseQuery":
