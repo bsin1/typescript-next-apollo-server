@@ -418,7 +418,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     this.imports.add(this.getApolloReactCommonImport(true));
     this.imports.add(this.getApolloReactHooksImport(false));
     this.imports.add("import { getClient } from '@/lib/apolloClient';");
-    this.imports.add("import { withAuthHandler } from '@/utils/api';");
+    this.imports.add(
+      "import { withServerQueryAuthHandler } from '@/utils/api';"
+    );
     this.imports.add(this.getDefaultOptions());
 
     const typeToHook = (type: string): string => {
@@ -522,7 +524,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         `export function ${serverOperationName}(baseOptions${
           hasRequiredVariables ? "" : "?"
         }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-          return withAuthHandler(
+          return withServerQueryAuthHandler(
             getClient().query<${operationResultType}, ${operationVariablesTypes}>({ query: ${this.getDocumentNodeVariable(
           node,
           documentVariableName
