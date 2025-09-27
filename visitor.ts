@@ -418,9 +418,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     this.imports.add(this.getApolloReactCommonImport(true));
     this.imports.add(this.getApolloReactHooksImport(false));
     this.imports.add("import { getClient } from '@/lib/apolloClient';");
-    this.imports.add(
-      "import { withAuthHandler } from '@/lib/withAuthHandler';"
-    );
+    this.imports.add("import { withAuthHandler } from '@/utils/api';");
     this.imports.add(this.getDefaultOptions());
 
     const typeToHook = (type: string): string => {
